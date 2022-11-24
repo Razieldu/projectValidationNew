@@ -6,7 +6,7 @@ const NumberDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 25px;
   height: 20vh;
   font-style: italic;
   font-size: 40px;
@@ -40,8 +40,8 @@ const StyledButton = styled.button`
   padding:10px 30px;
   border-radius:20px;
   border: 3px solid ;
-  fonz-size:20px;
-  font-color:blue;
+  font-size:20px;
+  color:grey
 
 `;
 
@@ -62,7 +62,7 @@ class App extends Component {
       inputList: [],
       checkList: [],
       buttonClicked: false,
-      showInfo: false,
+      wrongInfoWindow: false,
     };
   }
 
@@ -82,7 +82,7 @@ class App extends Component {
         inputList: [],
         checkList: [],
         buttonClicked: false,
-        showInfo:false
+        wrongInfoWindow:false
       };
     });
   };
@@ -98,8 +98,8 @@ class App extends Component {
       }
       return {
         ...prev,
-        inputList: [...tempInput],
-        checkList: [...tempCheck],
+        inputList: tempInput,
+        checkList: tempCheck,
       };
     });
   };
@@ -108,7 +108,7 @@ class App extends Component {
     event.preventDefault();
     if (this.state.inputList.length !== 4) return;
     this.setState((prev) => {
-      return { ...prev, showInfo: true, buttonClicked: true };
+      return { ...prev,  wrongInfoWindow: true, buttonClicked: true };
     });
     if (this.state.checkList.every((each) => each === true)) {
       setTimeout(() => {
@@ -123,7 +123,7 @@ class App extends Component {
   };
   render() {
     let buttonCanClicked = this.state.checkList.length === 4;
-    let inputIsCheckedOk =
+    let inputStatusCheck =
       buttonCanClicked && this.state.checkList.some((each) => each === false);
     return (
       <div className="App">
@@ -146,7 +146,7 @@ class App extends Component {
               />
             ))}
           </InputDiv>
-          <p>如果驗證碼不清晰,請點擊<span onClick={this.resetNum} style={{cursor: "pointer", color: "blue", fontSize: "20px",}}>這裡</span>更新</p>
+          <p>如果驗證碼不清晰,&nbsp;&nbsp;&nbsp;&nbsp;請點擊<span onClick={this.resetNum} style={{cursor: "pointer", color: "blue", fontSize: "30px",}}>這裡</span>更新</p>
           <StyledButton
             onClick={this.buttonClickHandler}
             inputIsFull={buttonCanClicked}
@@ -156,8 +156,8 @@ class App extends Component {
            免費試玩
           </StyledButton>
         </form>
-        <a>商務聯繫 > ></a>
-        {inputIsCheckedOk && this.state.showInfo && <p>驗證碼錯誤</p>}
+        <a href="https://www.google.com/" style={{textDecoration:"none"}}  target="new">商務聯繫 > ></a>
+        {inputStatusCheck && this.state.wrongInfoWindow && <p>驗證碼錯誤</p>}
         <br />
         {`${this.state.inputList[0]}`}
         {`${this.state.inputList[1]}`}
