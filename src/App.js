@@ -22,7 +22,7 @@ const StyledInput = styled.input`
   height: 50px;
   border-radius: 20%;
   text-align: center;
-  font-size: 20px;
+  font-size: 30px;
 `;
 
 const StyledButton = styled.button`
@@ -30,13 +30,19 @@ const StyledButton = styled.button`
     let inputIsOk = props.inputIsFull;
     let buttonIsClicked = props.buttonClicked;
     if (!inputIsOk && !buttonIsClicked) {
-      return "grey";
+      return "transparent";
     } else if (inputIsOk && buttonIsClicked) {
       return "blue";
     } else if (inputIsOk && !buttonIsClicked) {
       return "red";
     }
   }};
+  padding:10px 30px;
+  border-radius:20px;
+  border: 3px solid ;
+  fonz-size:20px;
+  font-color:blue;
+
 `;
 
 const numGenerator = () => {
@@ -68,7 +74,7 @@ class App extends Component {
       };
     });
   }
-  componentDidUpdate(preProps, preState) {}
+  componentDidUpdate() {}
   resetNum = () => {
     this.setState((prev) => {
       return {
@@ -106,7 +112,6 @@ class App extends Component {
     });
     if (this.state.checkList.every((each) => each === true)) {
       setTimeout(() => {
-        console.log(...this.state.inputList);
         this.resetNum();
       }, 500);
     } else {
@@ -141,17 +146,18 @@ class App extends Component {
               />
             ))}
           </InputDiv>
+          <p>如果驗證碼不清晰,請點擊<span onClick={this.resetNum} style={{cursor: "pointer", color: "blue", fontSize: "20px",}}>這裡</span>更新</p>
           <StyledButton
+            onClick={this.buttonClickHandler}
             inputIsFull={buttonCanClicked}
             buttonClicked={this.state.buttonClicked}
-            onClick={this.buttonClickHandler}
             disabled={!buttonCanClicked}
           >
-            免費體驗
+           免費試玩
           </StyledButton>
         </form>
+        <a>商務聯繫 > ></a>
         {inputIsCheckedOk && this.state.showInfo && <p>驗證碼錯誤</p>}
-        <button onClick={this.resetNum}>重置驗證碼</button>
         <br />
         {`${this.state.inputList[0]}`}
         {`${this.state.inputList[1]}`}
