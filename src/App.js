@@ -27,8 +27,8 @@ const StyledInput = styled.input`
 
 const StyledButton = styled.button`
   background-color: ${(props) => {
-    let inputIsOk = props.inputIsFull;
-    let buttonIsClicked = props.buttonClicked;
+    let inputIsOk = props.inputIsFull; //四個input都已經輸入
+    let buttonIsClicked = props.buttonClicked;//按鈕是否被點擊
     if (!inputIsOk && !buttonIsClicked) {
       return "transparent";
     } else if (inputIsOk && buttonIsClicked) {
@@ -45,7 +45,7 @@ const StyledButton = styled.button`
 
 `;
 
-const numGenerator = () => {
+const numGenerator = () => {  ///生成四個隨機數字的陣列
   let numsList = [];
   for (let i = 1; i < 5; i++) {
     let randomNum = Math.floor(Math.random() * 9);
@@ -58,11 +58,11 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      validationList: [],
-      inputList: [],
-      checkList: [],
-      buttonClicked: false,
-      wrongInfoWindow: false,
+      validationList: [], ///驗證碼陣列
+      inputList: [],   ///input輸入的陣列
+      checkList: [],   ///上面兩陣列進行比對,一樣為true,不一樣為false
+      buttonClicked: false, 
+      wrongInfoWindow: false, ///控制驗證碼錯誤提示是否出現
     };
   }
 
@@ -75,7 +75,7 @@ class App extends Component {
     });
   }
   componentDidUpdate() {}
-  resetNum = () => {
+  resetNum = () => {  ///重新生成驗證碼
     this.setState((prev) => {
       return {
         validationList: numGenerator(),
@@ -86,7 +86,7 @@ class App extends Component {
       };
     });
   };
-  inputChangeAndCheck = (index, event) => {
+  inputChangeAndCheck = (index, event) => { ///監控input輸入數字並與驗證碼進行比對
     this.setState((prev) => {
       let tempInput = [...this.state.inputList];
       let tempCheck = [...this.state.checkList];
@@ -104,7 +104,7 @@ class App extends Component {
     });
   };
 
-  submitHandler = (event) => {
+  submitHandler = (event) => { ///表單提交
     event.preventDefault();
     if (this.state.inputList.length !== 4) return;
     this.setState((prev) => {
@@ -122,9 +122,9 @@ class App extends Component {
     }
   };
   render() {
-    let buttonCanClicked = this.state.checkList.length === 4;
+    let buttonCanClicked = this.state.checkList.length === 4; ///確認四個input都有輸入
     let inputStatusCheck =
-      buttonCanClicked && this.state.checkList.some((each) => each === false);
+      buttonCanClicked && this.state.checkList.some((each) => each === false); ///四個input都有輸入,並驗證是否有其一為false
     return (
       <div className="App">
         <form onSubmit={this.submitHandler}>
@@ -149,7 +149,7 @@ class App extends Component {
           <p>如果驗證碼不清晰,&nbsp;&nbsp;&nbsp;&nbsp;請點擊<span onClick={this.resetNum} style={{cursor: "pointer", color: "blue", fontSize: "30px",}}>這裡</span>更新</p>
           <StyledButton
             onClick={this.buttonClickHandler}
-            inputIsFull={buttonCanClicked}
+            inputIsFull={buttonCanClicked} ///確認四個input都有輸入
             buttonClicked={this.state.buttonClicked}
             disabled={!buttonCanClicked}
           >
